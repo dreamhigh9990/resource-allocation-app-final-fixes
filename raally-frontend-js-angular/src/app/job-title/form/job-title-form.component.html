@@ -1,0 +1,115 @@
+<form
+  class="form"
+  (ngSubmit)="doSave()"
+  [formGroup]="form"
+  #ngForm="ngForm"
+  *ngIf="form"
+>
+  <app-person-form-field
+    [control]="form.get(fields.person.name)"
+    [label]="fields.person.label"
+    [placeholder]="fields.person.placeholder"
+    [hint]="fields.person.hint"
+    [required]="fields.person.required"
+    [fetchFn]="fields.person.fetchFn"
+    [mapperFn]="fields.person.mapperFn"
+    [showCreate]="!modal"
+    [submitted]="ngForm.submitted"
+    mode="single"
+  ></app-person-form-field>
+
+  <mat-form-field floatLabel="always" appearance="outline">
+    <mat-label>{{ fields.title.label }}</mat-label>
+    <input
+      matInput
+      [formControlName]="fields.title.name"
+      [placeholder]="fields.title.placeholder"
+      [required]="fields.title.required"
+    />
+
+    <mat-hint *ngIf="fields.title.hint">
+      {{ fields.title.hint }}
+    </mat-hint>
+
+    <mat-error>
+      <app-validations
+        [control]="form.get(fields.title.name)"
+        [label]="fields.title.label"
+      ></app-validations>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field floatLabel="always" appearance="outline">
+    <mat-label>{{ fields.effectiveDate.label }}</mat-label>
+    <input
+      matInput
+      type="date"
+      [formControlName]="fields.effectiveDate.name"
+      [placeholder]="fields.effectiveDate.placeholder"
+      [required]="fields.effectiveDate.required"
+    />
+
+    <mat-hint *ngIf="fields.effectiveDate.hint">
+      {{ fields.effectiveDate.hint }}
+    </mat-hint>
+
+    <mat-error>
+      <app-validations
+        [control]="form.get(fields.effectiveDate.name)"
+        [label]="fields.effectiveDate.label"
+      ></app-validations>
+    </mat-error>
+  </mat-form-field>
+
+  <div
+    class="form-buttons"
+    [class.form-buttons-modal]="modal"
+  >
+    <button
+      mat-raised-button
+      [disabled]="saveLoading"
+      color="primary"
+      type="submit"
+    >
+      <mat-icon
+        inline
+        fontSet="far"
+        fontIcon="fa-save"
+      ></mat-icon
+      >&#160;
+      <app-i18n key="common.save"></app-i18n>
+    </button>
+
+    <!-- Bug #3: [Job Title] "Reset" button position is wrong on New/Edit Job Title -->
+
+    <button
+      mat-flat-button
+      [disabled]="saveLoading"
+      (click)="doReset()"
+      type="button"
+    >
+      <mat-icon
+        inline
+        fontSet="fas"
+        fontIcon="fa-undo"
+      ></mat-icon
+      >&#160;
+      <app-i18n key="common.reset"></app-i18n>
+    </button>
+    
+    <button
+      mat-flat-button
+      [disabled]="saveLoading"
+      type="button"
+      (click)="cancel.emit()"
+    >
+      <mat-icon
+        inline
+        fontSet="fas"
+        fontIcon="fa-times"
+      ></mat-icon
+      >&#160;
+      <app-i18n key="common.cancel"></app-i18n>
+    </button>
+  </div>
+</form>

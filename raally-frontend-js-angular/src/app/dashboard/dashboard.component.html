@@ -1,0 +1,60 @@
+<div style="margin-top: 16px;">
+  <div class="row">
+    <div *ngIf="loading" class="app-page-spinner">
+      <mat-spinner color="accent"></mat-spinner>
+    </div>
+    <div
+      *ngIf="!loading"
+      style="margin-bottom: 1em;"
+      class="col-xs-12 col-md-6"
+    >
+      <app-dashboard-chart
+      [props]="mix1"
+      [data]="service.data.numberOfPeople"
+      ></app-dashboard-chart>
+    </div>
+
+    <div
+      *ngIf="!loading"
+      style="margin-bottom: 1em;"
+      class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+    >
+      <app-dashboard-chart
+        [props]="doughnut"
+        [data]="service.data.currentUsageDataByHours"
+      ></app-dashboard-chart>
+    </div>
+
+    <div
+      *ngIf="!loading"
+      style="margin-bottom: 1em;"
+      class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+    >
+      <app-dashboard-chart
+        [props]="doughnut"
+        [data]="service.data.currentUsageDataByPeople"
+      ></app-dashboard-chart>
+    </div>
+
+    <div
+      *ngIf="!loading"
+      style="margin-bottom: 1em;"
+      class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+    >
+      <app-dashboard-chart
+        [props]="radar"
+        [data]="service.data.currentIdlePeopleByRole"
+      ></app-dashboard-chart>
+    </div>
+  </div>
+  <p
+    style="
+      font-size: 14px;
+      width: 100%;
+      text-align: center;
+      color: grey;
+    "
+  >
+    {{service.data.totalElapsedTimeMessage}}
+  </p>
+</div>

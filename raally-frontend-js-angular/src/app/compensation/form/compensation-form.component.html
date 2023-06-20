@@ -1,0 +1,205 @@
+<form
+  class="form"
+  (ngSubmit)="doSave()"
+  [formGroup]="form"
+  #ngForm="ngForm"
+  *ngIf="form"
+>
+  <app-person-form-field
+    [control]="form.get(fields.person.name)"
+    [label]="fields.person.label"
+    [placeholder]="fields.person.placeholder"
+    [hint]="fields.person.hint"
+    [required]="fields.person.required"
+    [fetchFn]="fields.person.fetchFn"
+    [mapperFn]="fields.person.mapperFn"
+    [showCreate]="!modal"
+    [submitted]="ngForm.submitted"
+    mode="single"
+  ></app-person-form-field>
+
+  <mat-form-field floatLabel="always" appearance="outline">
+    <mat-label>{{ fields.type.label }}</mat-label>
+    <mat-select
+      [formControlName]="fields.type.name"
+      [placeholder]="fields.type.placeholder"
+    >
+      <mat-option>--</mat-option>
+      <mat-option
+        *ngFor="let option of fields.type.options"
+        [value]="option.id"
+      >
+        {{ option.label }}
+      </mat-option>
+    </mat-select>
+    <mat-hint *ngIf="fields.type.hint">
+      {{ fields.type.hint }}
+    </mat-hint>
+    <mat-error>
+      <app-validations
+        [control]="form.get(fields.type.name)"
+        [label]="fields.type.label"
+      ></app-validations>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field floatLabel="always" appearance="outline">
+    <mat-label>{{ fields.workAvailability.label }}</mat-label>
+    <input
+      matInput
+      [formControlName]="fields.workAvailability.name"
+      [required]="fields.workAvailability.required"
+      [placeholder]="fields.workAvailability.placeholder"
+      type="number"
+      step="1"
+    />
+
+    <mat-hint *ngIf="fields.workAvailability.hint">
+      {{ fields.workAvailability.hint }}
+    </mat-hint>
+
+    <mat-error>
+      <app-validations
+        [control]="form.get(fields.workAvailability.name)"
+        [label]="fields.workAvailability.label"
+      ></app-validations>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field floatLabel="always" appearance="outline">
+    <mat-label>{{ fields.monetary.label }}</mat-label>
+    <input
+      matInput
+      [formControlName]="fields.monetary.name"
+      [placeholder]="fields.monetary.placeholder"
+      [required]="fields.monetary.required"
+    />
+
+    <mat-hint *ngIf="fields.monetary.hint">
+      {{ fields.monetary.hint }}
+    </mat-hint>
+
+    <mat-error>
+      <app-validations
+        [control]="form.get(fields.monetary.name)"
+        [label]="fields.monetary.label"
+      ></app-validations>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field floatLabel="always" appearance="outline">
+    <mat-label>{{ fields.paidTimeOff.label }}</mat-label>
+    <input
+      matInput
+      [formControlName]="fields.paidTimeOff.name"
+      [required]="fields.paidTimeOff.required"
+      [placeholder]="fields.paidTimeOff.placeholder"
+      type="number"
+      step="1"
+    />
+
+    <mat-hint *ngIf="fields.paidTimeOff.hint">
+      {{ fields.paidTimeOff.hint }}
+    </mat-hint>
+
+    <mat-error>
+      <app-validations
+        [control]="form.get(fields.paidTimeOff.name)"
+        [label]="fields.paidTimeOff.label"
+      ></app-validations>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field floatLabel="always" appearance="outline">
+    <mat-label>{{ fields.otherBenefits.label }}</mat-label>
+    <textarea
+      matInput
+      [formControlName]="fields.otherBenefits.name"
+      [rows]="4"
+      [placeholder]="fields.otherBenefits.placeholder"
+      [required]="fields.otherBenefits.required"
+    ></textarea>
+
+    <mat-hint *ngIf="fields.otherBenefits.hint">
+      {{ fields.otherBenefits.hint }}
+    </mat-hint>
+
+    <mat-error>
+      <app-validations
+        [control]="form.get(fields.otherBenefits.name)"
+        [label]="fields.otherBenefits.label"
+      ></app-validations>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field floatLabel="always" appearance="outline">
+    <mat-label>{{ fields.effectiveDate.label }}</mat-label>
+    <input
+      matInput
+      type="date"
+      [formControlName]="fields.effectiveDate.name"
+      [placeholder]="fields.effectiveDate.placeholder"
+      [required]="fields.effectiveDate.required"
+    />
+
+    <mat-hint *ngIf="fields.effectiveDate.hint">
+      {{ fields.effectiveDate.hint }}
+    </mat-hint>
+
+    <mat-error>
+      <app-validations
+        [control]="form.get(fields.effectiveDate.name)"
+        [label]="fields.effectiveDate.label"
+      ></app-validations>
+    </mat-error>
+  </mat-form-field>
+
+  <div
+    class="form-buttons"
+    [class.form-buttons-modal]="modal"
+  >
+    <button
+      mat-raised-button
+      [disabled]="saveLoading"
+      color="primary"
+      type="submit"
+    >
+      <mat-icon
+        inline
+        fontSet="far"
+        fontIcon="fa-save"
+      ></mat-icon
+      >&#160;
+      <app-i18n key="common.save"></app-i18n>
+    </button>
+    <button
+      mat-flat-button
+      [disabled]="saveLoading"
+      (click)="doReset()"
+      type="button"
+    >
+      <mat-icon
+        inline
+        fontSet="fas"
+        fontIcon="fa-undo"
+      ></mat-icon
+      >&#160;
+      <app-i18n key="common.reset"></app-i18n>
+    </button>
+
+    <button
+      mat-flat-button
+      [disabled]="saveLoading"
+      type="button"
+      (click)="cancel.emit()"
+    >
+      <mat-icon
+        inline
+        fontSet="fas"
+        fontIcon="fa-times"
+      ></mat-icon
+      >&#160;
+      <app-i18n key="common.cancel"></app-i18n>
+    </button>
+  </div>
+</form>

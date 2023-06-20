@@ -1,0 +1,88 @@
+<div class="table-responsive">
+    <table
+      style="width: 100%;"
+      mat-table
+      [dataSource]="rows"
+    >
+      <ng-container [matColumnDef]="fields.project.name">
+        <th mat-header-cell *matHeaderCellDef>
+          {{ fields.project.label }}
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <app-table-item-relation-to-one
+            [url]="fields.project.viewUrl"
+            [permission]="fields.project.readPermission"
+            [value]="presenter(row, 'project')"
+          ></app-table-item-relation-to-one>
+        </td>
+      </ng-container>
+      <ng-container
+        [matColumnDef]="fields.hoursPerWeek.name"
+      >
+        <th mat-header-cell *matHeaderCellDef>
+          {{ fields.hoursPerWeek.label }}
+        </th>
+        <td mat-cell *matCellDef="let row">
+          {{ presenter(row, 'hoursPerWeek') }}
+        </td>
+      </ng-container>
+      <ng-container
+        [matColumnDef]="fields.startDate.name"
+      >
+        <th mat-header-cell *matHeaderCellDef>
+          {{ fields.startDate.label }}
+        </th>
+        <td mat-cell *matCellDef="let row">
+          {{ presenter(row, 'startDate') }}
+        </td>
+      </ng-container>
+      <ng-container
+        [matColumnDef]="fields.endDate.name"
+      >
+        <th mat-header-cell *matHeaderCellDef>
+          {{ fields.endDate.label }}
+        </th>
+        <td mat-cell *matCellDef="let row">
+          {{ presenter(row, 'endDate') }}
+        </td>
+      </ng-container>
+      <ng-container
+        [matColumnDef]="fields.role.name"
+      >
+        <th mat-header-cell *matHeaderCellDef>
+          {{ fields.role.label }}
+        </th>
+        <td mat-cell *matCellDef="let row">
+          {{ presenter(row, 'role') }}
+        </td>
+      </ng-container>
+      <ng-container
+        [matColumnDef]="fields.notes.name"
+      >
+        <th mat-header-cell *matHeaderCellDef>
+          {{ fields.notes.label }}
+        </th>
+        <td mat-cell *matCellDef="let row">
+          {{ presenter(row, 'notes') }}
+        </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="columns"></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: this.columns"
+      ></tr>
+    </table>
+  
+    <div
+      *ngIf="!service.loading && !hasRows"
+      class="mat-table-message"
+    >
+      <app-i18n key="table.noData"></app-i18n>
+    </div>
+  
+    <div *ngIf="service.loading" class="mat-table-message">
+      <app-i18n key="table.loading"></app-i18n>
+    </div>
+  </div>
+  

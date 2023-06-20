@@ -1,0 +1,32 @@
+<app-breadcrumb [items]="breadcrumb"></app-breadcrumb>
+
+<div class="app-content-page">
+  <h1 class="app-content-title">
+    <app-i18n key="entities.project.view.title"></app-i18n>
+  </h1>
+
+  <app-project-view-toolbar></app-project-view-toolbar>
+
+  <div *ngIf="loading" class="app-page-spinner">
+    <mat-spinner color="accent"></mat-spinner>
+  </div>
+
+  <div *ngIf="!loading">
+    <app-view-item-text
+      [label]="fields.projectId.label"
+      [value]="presenter(record, 'projectId')"
+    ></app-view-item-text>
+
+    <app-view-item-text
+      [label]="fields.name.label"
+      [value]="presenter(record, 'name')"
+    ></app-view-item-text>
+
+    <app-view-item-text
+      [label]="fields.type.label"
+      [value]="presenter(record, 'type')"
+    ></app-view-item-text>
+
+    <app-project-members-table></app-project-members-table>
+  </div>
+</div>

@@ -1,0 +1,195 @@
+<form
+  class="form"
+  (ngSubmit)="doSave()"
+  [formGroup]="form"
+  #ngForm="ngForm"
+  *ngIf="form"
+>
+  <app-person-form-field
+    [control]="form.get(fields.person.name)"
+    [label]="fields.person.label"
+    [placeholder]="fields.person.placeholder"
+    [hint]="fields.person.hint"
+    [required]="fields.person.required"
+    [fetchFn]="fields.person.fetchFn"
+    [mapperFn]="fields.person.mapperFn"
+    [showCreate]="!modal"
+    [submitted]="ngForm.submitted"
+    mode="single"
+  ></app-person-form-field>
+
+  <app-project-form-field
+    [control]="form.get(fields.project.name)"
+    [label]="fields.project.label"
+    [placeholder]="fields.project.placeholder"
+    [hint]="fields.project.hint"
+    [required]="fields.project.required"
+    [fetchFn]="fields.project.fetchFn"
+    [mapperFn]="fields.project.mapperFn"
+    [showCreate]="!modal"
+    [submitted]="ngForm.submitted"
+    mode="single"
+  ></app-project-form-field>
+
+  <mat-form-field floatLabel="always" appearance="outline">
+    <mat-label>{{ fields.hoursPerWeek.label }}</mat-label>
+    <input
+      matInput
+      [formControlName]="fields.hoursPerWeek.name"
+      [required]="fields.hoursPerWeek.required"
+      [placeholder]="fields.hoursPerWeek.placeholder"
+      type="number"
+      step="1"
+    />
+
+    <mat-hint *ngIf="fields.hoursPerWeek.hint">
+      {{ fields.hoursPerWeek.hint }}
+    </mat-hint>
+
+    <mat-error>
+      <app-validations
+        [control]="form.get(fields.hoursPerWeek.name)"
+        [label]="fields.hoursPerWeek.label"
+      ></app-validations>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field floatLabel="always" appearance="outline">
+    <mat-label>{{ fields.startDate.label }}</mat-label>
+    <input
+      matInput
+      type="date"
+      [formControlName]="fields.startDate.name"
+      [placeholder]="fields.startDate.placeholder"
+      [required]="fields.startDate.required"
+    />
+
+    <mat-hint *ngIf="fields.startDate.hint">
+      {{ fields.startDate.hint }}
+    </mat-hint>
+
+    <mat-error>
+      <app-validations
+        [control]="form.get(fields.startDate.name)"
+        [label]="fields.startDate.label"
+      ></app-validations>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field floatLabel="always" appearance="outline">
+    <mat-label>{{ fields.endDate.label }}</mat-label>
+    <input
+      matInput
+      type="date"
+      [formControlName]="fields.endDate.name"
+      [placeholder]="fields.endDate.placeholder"
+      [required]="fields.endDate.required"
+    />
+
+    <mat-hint *ngIf="fields.endDate.hint">
+      {{ fields.endDate.hint }}
+    </mat-hint>
+
+    <mat-error>
+      <app-validations
+        [control]="form.get(fields.endDate.name)"
+        [label]="fields.endDate.label"
+      ></app-validations>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field floatLabel="always" appearance="outline">
+    <mat-label>{{ fields.role.label }}</mat-label>
+    <mat-select
+      [formControlName]="fields.role.name"
+      [placeholder]="fields.role.placeholder"
+    >
+      <mat-option>--</mat-option>
+      <mat-option
+        *ngFor="let option of fields.role.options"
+        [value]="option.id"
+      >
+        {{ option.label }}
+      </mat-option>
+    </mat-select>
+    <mat-hint *ngIf="fields.role.hint">
+      {{ fields.role.hint }}
+    </mat-hint>
+    <mat-error>
+      <app-validations
+        [control]="form.get(fields.role.name)"
+        [label]="fields.role.label"
+      ></app-validations>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field floatLabel="always" appearance="outline">
+    <mat-label>{{ fields.notes.label }}</mat-label>
+    <input
+      matInput
+      [formControlName]="fields.notes.name"
+      [placeholder]="fields.notes.placeholder"
+      [required]="fields.notes.required"
+    />
+
+    <mat-hint *ngIf="fields.notes.hint">
+      {{ fields.notes.hint }}
+    </mat-hint>
+
+    <mat-error>
+      <app-validations
+        [control]="form.get(fields.notes.name)"
+        [label]="fields.notes.label"
+      ></app-validations>
+    </mat-error>
+  </mat-form-field>
+
+  <div
+    class="form-buttons"
+    [class.form-buttons-modal]="modal"
+  >
+    <button
+      mat-raised-button
+      [disabled]="saveLoading"
+      color="primary"
+      type="submit"
+    >
+      <mat-icon
+        inline
+        fontSet="far"
+        fontIcon="fa-save"
+      ></mat-icon
+      >&#160;
+      <app-i18n key="common.save"></app-i18n>
+    </button>
+    <button
+      mat-flat-button
+      [disabled]="saveLoading"
+      (click)="doReset()"
+      type="button"
+    >
+      <mat-icon
+        inline
+        fontSet="fas"
+        fontIcon="fa-undo"
+      ></mat-icon
+      >&#160;
+      <app-i18n key="common.reset"></app-i18n>
+    </button>
+
+    <button
+      mat-flat-button
+      [disabled]="saveLoading"
+      type="button"
+      (click)="cancel.emit()"
+    >
+      <mat-icon
+        inline
+        fontSet="fas"
+        fontIcon="fa-times"
+      ></mat-icon
+      >&#160;
+      <app-i18n key="common.cancel"></app-i18n>
+    </button>
+  </div>
+</form>
